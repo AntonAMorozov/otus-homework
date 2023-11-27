@@ -1,16 +1,17 @@
 package homework;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class CustomerReverseOrder {
 
-    private final LinkedHashSet<Customer> set = new LinkedHashSet<>();
+    Deque<Customer> deque = new ArrayDeque<>();
 
     public void add(Customer customer) {
-        set.add(customer);
+        deque.add(customer);
     }
 
     public Customer take() {
-        return set.removeLast();
+        return deque.removeLast();
     }
 }
