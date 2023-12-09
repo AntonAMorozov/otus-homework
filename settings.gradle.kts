@@ -2,6 +2,7 @@ rootProject.name = "otus-homework"
 include("L01-gradle")
 include("L04-generics")
 
+include("L08-gc:homework")
 
 
 pluginManagement {
