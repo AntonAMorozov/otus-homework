@@ -3,7 +3,7 @@ include("L01-gradle")
 include("L04-generics")
 
 include("L08-gc:homework")
-
+include("L12-solid")
 
 pluginManagement {
     val jgitver: String by settings
