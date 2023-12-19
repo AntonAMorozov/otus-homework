@@ -2,22 +2,23 @@ package homework.atm;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import homework.atm.impl.AtmImpl;
 import java.util.Map;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
 
-class ATMTest {
+class AtmImplTest {
 
     @Test
     void startingBalanceEqualsZero() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         assertEquals(0, atm.getCurrentBalance());
         System.out.println(atm.getCurrentBalance());
     }
 
     @Test
     void depositCash() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         // вносим 4800
         atm.depositCash(2, 4, 8);
         assertEquals(4800, atm.getCurrentBalance());
@@ -25,7 +26,7 @@ class ATMTest {
 
     @Test
     void balanceAfterWithDrawCash() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         // вносим 4800
         atm.depositCash(2, 4, 8);
 
@@ -43,7 +44,7 @@ class ATMTest {
 
     @Test
     void notEnoughMoneyError() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         // вносим 4800
         atm.depositCash(2, 4, 8);
 
@@ -56,7 +57,7 @@ class ATMTest {
 
     @Test
     void notEnoughBanknotesError() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         atm.depositCash(5, 0, 7);
 
         assertEquals(5700, atm.getCurrentBalance());
@@ -67,7 +68,7 @@ class ATMTest {
 
     @Test
     void amountMustBeMultipleOfHundredError() {
-        ATM atm = new ATM();
+        Atm atm = new AtmImpl();
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> atm.withdrawCash(4970));
         assertEquals("The amount must be a multiple of 100", thrown.getMessage());
     }
