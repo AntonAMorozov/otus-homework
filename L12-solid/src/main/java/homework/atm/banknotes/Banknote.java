@@ -8,5 +8,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(chain = true)
 public class Banknote {
-    private Integer quantity = 0;
+    private int denomination;
+    private int quantity = 0;
 }
