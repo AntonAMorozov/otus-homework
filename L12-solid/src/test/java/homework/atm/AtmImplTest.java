@@ -3,8 +3,9 @@ package homework.atm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import homework.atm.banknotes.Banknote;
+import homework.atm.banknotes.StackOfBanknotes;
 import homework.atm.impl.AtmImpl;
+import homework.atm.impl.BanknotesStorageImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,24 +16,24 @@ class AtmImplTest {
 
     @Test
     void startingBalanceEqualsZero() {
-        Atm atm = getAtmList();
+        Atm atm = getAtm();
         assertEquals(0, atm.getCurrentBalance());
         System.out.println(atm.getCurrentBalance());
     }
 
     @Test
     void depositCashList() {
-        Atm atm = getAtmList();
+        Atm atm = getAtm();
         // вносим 4800
-        atm.depositCashList(2, 4, 8);
+        atm.depositCash(getCashList(2, 4, 8));
         assertEquals(4800, atm.getCurrentBalance());
     }
 
     @Test
     void balanceAfterWithDrawCash() {
-        Atm atm = getAtmList();
+        Atm atm = getAtm();
         // вносим 4800
-        atm.depositCashList(2, 4, 8);
+        atm.depositCash(getCashList(2, 4, 8));
 
         assertEquals(4800, atm.getCurrentBalance());
 
@@ -48,9 +49,9 @@ class AtmImplTest {
 
     @Test
     void notEnoughMoneyError() {
-        Atm atm = getAtmList();
+        Atm atm = getAtm();
         // вносим 4800
-        atm.depositCashList(2, 4, 8);
+        atm.depositCash(getCashList(2, 4, 8));
 
         assertEquals(4800, atm.getCurrentBalance());
 
@@ -61,8 +62,8 @@ class AtmImplTest {
 
     @Test
     void notEnoughBanknotesError() {
-        Atm atm = getAtmList();
-        atm.depositCashList(5, 0, 7);
+        Atm atm = getAtm();
+        atm.depositCash(getCashList(5, 0, 7));
 
         assertEquals(5700, atm.getCurrentBalance());
 
@@ -72,16 +73,25 @@ class AtmImplTest {
 
     @Test
     void amountMustBeMultipleOfHundredError() {
-        Atm atm = getAtmList();
+        Atm atm = getAtm();
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> atm.withdrawCash(4970));
         assertEquals("The amount must be a multiple of 100", thrown.getMessage());
     }
 
-    private static Atm getAtmList() {
-        List<Banknote> banknotes = new ArrayList<>();
-        banknotes.add(new Banknote().setDenomination(1000));
-        banknotes.add(new Banknote().setDenomination(500));
-        banknotes.add(new Banknote().setDenomination(100));
-        return new AtmImpl().setBanknotes(banknotes);
+    private static Atm getAtm() {
+        List<StackOfBanknotes> stackOfBanknotes = new ArrayList<>();
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(1000));
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(500));
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(100));
+        BanknotesStorageImpl banknotesStorageImpl = new BanknotesStorageImpl(stackOfBanknotes);
+        return new AtmImpl(banknotesStorageImpl);
+    }
+
+    private static List<StackOfBanknotes> getCashList(int firstQuantity, int secondQuantity, int thirdQuantity) {
+        List<StackOfBanknotes> stackOfBanknotes = new ArrayList<>();
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(1000).setQuantity(firstQuantity));
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(500).setQuantity(secondQuantity));
+        stackOfBanknotes.add(new StackOfBanknotes().setDenomination(100).setQuantity(thirdQuantity));
+        return stackOfBanknotes;
     }
 }

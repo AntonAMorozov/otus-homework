@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class Banknote {
+public class StackOfBanknotes {
     private int denomination;
     private int quantity = 0;
 }

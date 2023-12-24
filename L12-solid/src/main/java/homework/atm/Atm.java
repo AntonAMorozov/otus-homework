@@ -1,10 +1,12 @@
 package homework.atm;
 
+import homework.atm.banknotes.StackOfBanknotes;
+import java.util.List;
 import java.util.Map;
 
 public interface Atm {
 
-    void depositCashList(int... cash);
+    void depositCash(List<StackOfBanknotes> stackOfBanknotes);
 
     int getCurrentBalance();
 
