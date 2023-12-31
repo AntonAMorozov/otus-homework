@@ -33,6 +33,7 @@ allprojects {
     val testcontainersBom: String by project
     val protobufBom: String by project
     val guava: String by project
+    val glassfishJson: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -43,6 +44,7 @@ allprojects {
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
         }
     }
 
@@ -63,6 +65,7 @@ allprojects {
             force("org.sonarsource.sslr:sslr-core:1.24.0.633")
             force("org.eclipse.platform:org.eclipse.osgi:3.18.400")
             force("org.eclipse.platform:org.eclipse.equinox.common:3.18.0")
+            force("com.google.j2objc:j2objc-annotations:2.8")
         }
     }
 }
