@@ -5,7 +5,6 @@ include("L04-generics")
 include("L08-gc:homework")
 include("L12-solid")
 
-include("L16-io:demo")
 include("L16-io:homework")
 
 pluginManagement {
