@@ -11,33 +11,30 @@ class Ioc {
 
     private Ioc() {}
 
-    public static TestLogging createTestLogging() {
-        InvocationHandler handler = new DemoInvocationHandler(new TestLoggingImpl());
-        return (TestLogging)
-                Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class<?>[] {TestLogging.class}, handler);
+    public static Object createTestLogging(Object clazz) {
+        InvocationHandler handler = new DemoInvocationHandler(clazz);
+        return Proxy.newProxyInstance(
+                Ioc.class.getClassLoader(), clazz.getClass().getInterfaces(), handler);
     }
 
     public static class DemoInvocationHandler implements InvocationHandler {
 
-        private final TestLogging testLogging;
+        private final Object clazz;
 
-        DemoInvocationHandler(TestLogging testLogging) {
-            this.testLogging = testLogging;
+        DemoInvocationHandler(Object clazz) {
+            this.clazz = clazz;
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            var invocationHandler = Proxy.getInvocationHandler(proxy);
-            if (invocationHandler instanceof DemoInvocationHandler demoInvocationHandler) {
-                Method declaredMethod = demoInvocationHandler
-                        .testLogging
-                        .getClass()
-                        .getDeclaredMethod(method.getName(), method.getParameterTypes());
-                if (declaredMethod.isAnnotationPresent(Log.class)) {
-                    logger.info("executed method:{}, param: {}", method.getName(), args);
-                }
+            var invocationHandler = (DemoInvocationHandler) Proxy.getInvocationHandler(proxy);
+            Method declaredMethod =
+                    invocationHandler.clazz.getClass().getDeclaredMethod(method.getName(), method.getParameterTypes());
+            if (declaredMethod.isAnnotationPresent(Log.class)) {
+                logger.info("executed method:{}, param: {}", method.getName(), args);
             }
-            return method.invoke(testLogging, args);
+
+            return method.invoke(clazz, args);
         }
     }
 }
