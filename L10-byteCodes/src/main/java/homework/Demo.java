@@ -8,7 +8,7 @@ public class Demo {
         testLogging.calculation(6); // логирование не вызывается
         testLogging.calculation(6, 7); // логирование вызывается
 
-        var testLogging2 = (TestLogging) Ioc.createTestLogging( new TestLoggingImpl2());
+        var testLogging2 = (TestLogging) Ioc.createTestLogging(new TestLoggingImpl2());
         testLogging2.calculation(6); // логирование вызывается
         testLogging2.calculation(6, 7); // логирование не вызывается
     }
