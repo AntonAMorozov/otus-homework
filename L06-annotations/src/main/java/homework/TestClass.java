@@ -4,7 +4,7 @@ import homework.annotations.After;
 import homework.annotations.Before;
 import homework.annotations.Test;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "java:S106", "java:S1186", "java:S112"})
 public class TestClass {
 
     @Before
